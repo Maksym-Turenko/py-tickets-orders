@@ -131,8 +131,6 @@ class OrderSerializer(serializers.ModelSerializer):
         with transaction.atomic():
             order = Order.objects.create(**validated_data)
             Ticket.objects.bulk_create(
-                Ticket(
-                    order=order, **ticket_data
-                ) for ticket_data in tickets_data
+                Ticket(order=order, **ticket_data)
+                for ticket_data in tickets_data
             )
-        return order
