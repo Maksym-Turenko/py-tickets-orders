@@ -119,7 +119,7 @@ class TicketRetrieveSerializer(serializers.ModelSerializer):
         fields = ("id", "order", "row", "seat", "movie_session")
 
 
-class OrderSerializer(serializers.ModelSerializer):
+class OrderCreateSerializer(serializers.ModelSerializer):
     tickets = TicketRetrieveSerializer(many=True)
 
     class Meta:
@@ -134,3 +134,11 @@ class OrderSerializer(serializers.ModelSerializer):
                 Ticket(order=order, **ticket_data)
                 for ticket_data in tickets_data
             )
+
+
+class OrderRetrieveSerializer(serializers.ModelSerializer):
+    tickets = TicketRetrieveSerializer(many=True)
+
+    class Meta:
+        model = Order
+        fields = ("id", "created_at", "tickets")
